@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="black" class="font-Neucha">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./ToDo.js" defer></script>
+    <title>Pomodoro2Do</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Shadows+Into+Light&display=swap');
+      </style>
+</head>
+
+<body class="flex flex-col items-center p-1  ">  
+
+    <header class="absolute top-4 w-full ">
+        <nav class="flex ">
+            <a href="Pomodoro.html"  class="btn btn-secondary flex text-center  btn-sm sm:btn-md">tarih-saat-düzenle</a>
+            <a href="Pomodoro.html"  class="btn btn-secondary flex justify-center items-center ml-auto btn-sm sm:btn-md"><p class="text-center">Pomodoro</p><svg  height="45px" viewBox="-7.44 -7.44 38.88 38.88" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="none" stroke="#000000" stroke-width="2" d="M20,11 L22,8 L20,5 L12,5 L12,11 L20,11 Z M12,24 L12,0 M4,2 L2,5 L4,8 L12,8 L12,2 L4,2 Z"></path> </g></svg></a>
+        </nav>
+    </header>
+
+
+    <div class="flex-col flex mt-36 gap-1 items-stretch w-3/4">
+        <div class="flex justify-center self-center gap-1 w-full">
+            <input id="ekle-input" type="text" placeholder="Görev Ekle" class="input input-bordered input-primary grow">
+            <button id="ekle-btn" class="btn btn-circle w-16 btn-primary ">Ekle</button>
+        </div>
+
+        <div>
+            <div class="tabs">
+                <button id="devam-eden-tab" class="tab basis-1/2 tab-bordered tab-active">Devam Eden Görevler</button>
+                <button id="tamamlanmis-tab" class="tab basis-1/2 tab-bordered">Tamamlanmış Görevler</button>
+
+            </div>
+
+            <div>
+                <div id="devam-edenler-container">
+                    <ul id="devam-edenler">
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="flex flex-row-reverse">
+                        <button id="hepsini-tamamla" class="btn bottom-0 ml-auto">Hepsini Tamamla</button>
+                    </div>
+                </div>
+                <div id="tamamlanmis-container" hidden>
+                    <ul id="tamamlanmis">
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="flex flex-row-reverse">
+                        <button class="btn bottom-0 ml-auto" id="hepsini-sil">Hepsini Sil</button>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+<footer class="absolute bottom-0 ">
+        <a href="about.html" class="link link-secondary">About Us</a>
+        <a href="Contact_Us.html"class="link link-secondary">Contact</a>
+        <a href="pomodoronedir.html"class="link link-secondary">Pomodoro Nedir ? </a>
+</footer>
+
+
+
+
+</body>
+
+</html>

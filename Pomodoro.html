@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="black">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="Pomodoro.js" defer></script>
+    <title>Pomodoro2Do</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Shadows+Into+Light&display=swap');
+      </style>
+</head>
+
+<body class="flex flex-col items-center p-1">
+
+    <header class="absolute top-4 w-full ">
+        <nav class="flex ">
+            <a href="Pomodoro.html"  class="btn btn-secondary flex text-center  btn-sm sm:btn-md">tarih-saat-düzenle</a>
+            <a href="ToDo.html"  class="btn btn-secondary flex ml-auto btn-sm sm:btn-md">TO DO<svg  height="45px" viewBox="-7.44 -7.44 38.88 38.88" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="none" stroke="#000000" stroke-width="2" d="M20,11 L22,8 L20,5 L12,5 L12,11 L20,11 Z M12,24 L12,0 M4,2 L2,5 L4,8 L12,8 L12,2 L4,2 Z"></path> </g></svg></a>
+        </nav>
+    </header>
+
+    <div id="sayac" class="flex justify-center gap-1 mt-36 countdown font-mono text-9xl" >
+        <div id="dakika" class="pr-4 " style="--value:25;"></div>:
+        <div id="saniye" class="pr-4" style="--value:0;"></div>
+    </div>
+
+    <div class="flex justify-center gap-1 ">
+        <button id="start-stop" class="btn basis-1/3">Başlat</button>
+        <button id="reset" class="btn basis-1/3">Sıfırla</button>
+        <button id="calisma-mola" class="btn basis-1/3">Molaya geç</button>
+    </div>
+
+    <div>
+        <label>Pomodoro: <input name="pomodoro sure" id="pomodoro-input" type="number" class="input input-bordered input-sm"></label>
+        <label>Mola: <input name="mola sure" id="mola-input" type="number" class="input input-bordered input-sm"></label>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
