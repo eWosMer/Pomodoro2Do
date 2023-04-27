@@ -31,7 +31,7 @@ let kronometre_reset_btn = document.getElementById("kronometre-reset");
 let kronometre_sayac_id;
 let kronometre_dakika = document.getElementById("kronometre-dakika");
 let kronometre_saniye = document.getElementById("kronometre-saniye");
-
+let videoIframe = document.querySelector("iframe");
 
 let title = document.querySelector("title");       // title DOM elementini seçtik
 
@@ -247,3 +247,82 @@ kronometre_reset_btn.addEventListener("click", () => {
   kronometre_sayac_id = undefined;
   kronometre_start_stop_btn.innerText = "Başlat";
 })
+
+
+
+// pomodoro video menüsü kodları :
+
+let videolar = ["https://www.youtube.com/embed/4FLK_r3PAh4?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0",
+  "https://www.youtube.com/embed/oN4Rhjcte_U?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0",
+  "https://www.youtube.com/embed/1fueZCTYkpA?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0"];
+
+
+let video_buttonlari = document.querySelectorAll(".video-btn");
+video_buttonlari.forEach((video_btn, i) => {
+  video_btn.addEventListener("click", () => {
+    videoIframe.hidden = false;
+    videoIframe.src = videolar[i];
+  })
+});
+
+
+
+
+// pomodoro ses menüsü kodları :
+
+let ses_butonlari = document.querySelectorAll(".ses-btn");
+let ses;
+let calisan_ses;
+ses_butonlari.forEach((ses_btn) => {
+  ses_btn.addEventListener("click", () => {
+    if (calisan_ses == ses_btn.innerText) {
+      ses.pause();
+      ses = null;
+      calisan_ses = null;
+    }
+    else {
+      if (calisan_ses) {
+        ses.pause();
+      }
+      calisan_ses = ses_btn.innerText;
+      ses = new Audio("./sesler/" + ses_btn.innerText.toLowerCase() + ".mp3");
+      ses.play();
+    }
+  })
+})
+
+
+
+
+
+// tarih ve saat kodları :
+
+
+let tarih = document.getElementById("tarih");
+setInterval(() => {
+  let simdi = new Date();
+  let saat = simdi.getHours();
+  if (saat < 10) {
+    saat = "0" + saat;
+  }
+  let dakika = simdi.getMinutes();
+  if (dakika < 10) {
+    dakika = "0" + dakika;
+  }
+  let ay = simdi.getMonth() + 1;  // js'de aylar sıfırdan(0) başladığından değişkene bir(1) ekledik.
+  if (ay < 10) {
+    ay = "0" + ay;
+  }
+  let gun = simdi.getDate();
+  if (gun < 10) {
+    gun = "0" + gun;
+  }
+  let saniye = simdi.getSeconds();
+  if (saniye < 10) {
+    saniye = "0" + saniye;
+  }
+  
+// buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
+
+  tarih.innerText = gun + "/" + ay + "/" + simdi.getFullYear() + "  -  " + saat + ":" + dakika + ":"  + saniye;
+}, 1000);

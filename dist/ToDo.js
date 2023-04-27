@@ -212,3 +212,35 @@ hepsinisilBtn.addEventListener("click", () => {
 
 }
 
+
+
+// tarih ve saat kodları
+
+let tarih = document.getElementById("tarih");
+setInterval(() => {
+  let simdi = new Date();
+  let saat = simdi.getHours();
+  if (saat < 10) {
+    saat = "0" + saat;
+  }
+  let dakika = simdi.getMinutes();
+  if (dakika < 10) {
+    dakika = "0" + dakika;
+  }
+  let ay = simdi.getMonth() + 1;      // js'de aylar sıfırdan(0) başladığından değişkene bir(1) ekledik.
+  if (ay < 10) {
+    ay = "0" + ay;
+  }
+  let gun = simdi.getDate();
+  if (gun < 10) {
+    gun = "0" + gun;
+  }
+  let saniye = simdi.getSeconds();
+  if (saniye < 10) {
+    saniye = "0" + saniye;
+  }
+
+  // buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
+  
+  tarih.innerText = gun + "/" + ay + "/" + simdi.getFullYear() + "  -  " + saat + ":" + dakika + ":"  + saniye;
+}, 1000);
