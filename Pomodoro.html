@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="Pomodoro.js" defer></script>
+    <script src="theme.js" defer></script>
     <title>Pomodoro2Do</title>
     <link rel="stylesheet" href="output.css">
     <style>
@@ -64,8 +65,6 @@
     
 
 
-
-
     <div class="dropdown dropdown-top dropdown-end absolute right-4 bottom-4 ">
         <label tabindex="0" class="btn m-1">Menu</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -82,31 +81,60 @@
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="ses-menu-kapat">X</button></div>
         <div class="flex flex-col">
-            <button class="btn rounded-none">Ses 1</button>
-            <button class="btn rounded-none">Ses 2</button>
-            <button class="btn rounded-none">Ses 3</button>
+            <button class="btn rounded-none ses-btn">Yağmur</button>
+            <button class="btn rounded-none ses-btn">Rüzgar</button>
+            <button class="btn rounded-none ses-btn">Kütüphane</button>
+            <button class="btn rounded-none ses-btn">Kafe</button>
+            <button class="btn rounded-none ses-btn">Ateş</button>
+            <button class="btn rounded-none ses-btn"></button>
+            <button class="btn rounded-none ses-btn"></button>
+            <button class="btn rounded-none ses-btn"></button>
+            <button class="btn rounded-none ses-btn"></button>
+            <button class="btn rounded-none ses-btn"></button>
         </div>
     </div>
 
 
     <div id="video-menu" class="absolute bg-base-100 m-auto top-1/4 w-1/4 border rounded-lg border-black p-2 bg" hidden>
-        <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
-                id="video-menu-kapat">X</button></div>
+        <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error" id="video-menu-kapat">X</button></div>
         <div class="flex flex-col">
-            <button class="btn rounded-none">Video 1</button>
-            <button class="btn rounded-none">Video 2</button>
-            <button class="btn rounded-none">Video 3</button>
+            <button class="btn rounded-none video-btn">Video 1</button>
+            <button class="btn rounded-none video-btn">Video 2</button>
+            <button class="btn rounded-none video-btn">Video 3</button>
         </div>
     </div>
 
 
-    <div id="tema-menu" class="absolute bg-base-100 m-auto top-1/4 w-1/4 border rounded-lg border-black p-2 bg" hidden>
+    <div id="tema-menu" class="absolute bg-base-100 m-auto top-2 w-1/4 border rounded-lg border-black p-2 bg" hidden>
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="tema-menu-kapat">X</button></div>
         <div class="flex flex-col">
-            <button class="btn rounded-none">Tema 1</button>
-            <button class="btn rounded-none">Tema 2</button>
-            <button class="btn rounded-none">Tema 3</button>
+            <button class="btn rounded-none tema-btn">Pastel</button>
+            <button class="btn rounded-none tema-btn">Light</button>
+            <button class="btn rounded-none tema-btn">Dark</button>
+            <button class="btn rounded-none tema-btn">Cupcake</button>
+            <button class="btn rounded-none tema-btn">Bumblebee</button>
+            <button class="btn rounded-none tema-btn">Emerald</button>
+            <button class="btn rounded-none tema-btn">Corporate</button>
+            <button class="btn rounded-none tema-btn">Synthwave</button>
+            <button class="btn rounded-none tema-btn">Retro</button>
+            <button class="btn rounded-none tema-btn">Cyberpunk</button>
+            <button class="btn rounded-none tema-btn">Valentine</button>
+            <button class="btn rounded-none tema-btn">Halloween</button>
+            <button class="btn rounded-none tema-btn">Garden</button>
+            <button class="btn rounded-none tema-btn">Forest</button>
+            <button class="btn rounded-none tema-btn">Aqua</button>
+            <button class="btn rounded-none tema-btn">Wireframe</button>
+            <button class="btn rounded-none tema-btn">Black</button>
+            <button class="btn rounded-none tema-btn">Luxury</button>
+            <button class="btn rounded-none tema-btn">Dracula</button>
+            <button class="btn rounded-none tema-btn">Cmyk</button>
+            <button class="btn rounded-none tema-btn">Autumn</button>
+            <button class="btn rounded-none tema-btn">Business</button>
+            <button class="btn rounded-none tema-btn">Acid</button>
+            <button class="btn rounded-none tema-btn">Lemonade</button>
+            <button class="btn rounded-none tema-btn">Night</button>
+            <button class="btn rounded-none tema-btn">Coffee</button>
         </div>
     </div>
 
@@ -126,8 +154,7 @@
 
     <div class="overflow-hidden w-[100%] aspect-[16/9] h-[100%] pointer-events-none absolute -z-10 top-0">
         <iframe width="560" height="315" class="w-[300%] ml-[-100%] h-[100%] top-0" src="https://www.youtube.com/embed/4FLK_r3PAh4?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0" title="YouTube video player" frameborder="0" allow="autoplay" allowfullscreen></iframe>
-    </div>
-
+        </div>
 
 
 
