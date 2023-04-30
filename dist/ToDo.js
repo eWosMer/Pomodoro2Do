@@ -154,9 +154,9 @@ hepsiniTamamlaBtn.addEventListener("click", () => {
   tamamlanmisGorevler = JSON.parse(localStorage.getItem("tamamlanmis"))
 
   if (gorevler == null) {
-    gorevler = [];                                
+    gorevler = [];
   }
-  
+
   if (tamamlanmisGorevler == null) {
     tamamlanmisGorevler = [];
   }
@@ -204,11 +204,11 @@ function tamamlanmisRenderla() {
     yeniGorevContainer.appendChild(silBtn);
     tamamlanmis.appendChild(yeniGorevContainer);
   }
-let hepsinisilBtn = document.getElementById("hepsini-sil");
-hepsinisilBtn.addEventListener("click", () => {
-  localStorage.setItem("tamamlanmis", null);
-  tamamlanmisRenderla();
-})
+  let hepsinisilBtn = document.getElementById("hepsini-sil");
+  hepsinisilBtn.addEventListener("click", () => {
+    localStorage.setItem("tamamlanmis", null);
+    tamamlanmisRenderla();
+  })
 
 }
 
@@ -241,6 +241,6 @@ setInterval(() => {
   }
 
   // buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
-  
-  tarih.innerText = gun + "/" + ay + "/" + simdi.getFullYear() + "  -  " + saat + ":" + dakika + ":"  + saniye;
+
+  tarih.innerText = `${gun}/${ay}/${simdi.getFullYear()}  -  ${saat}:${dakika}:${saniye}`;
 }, 1000);

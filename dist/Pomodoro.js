@@ -19,6 +19,9 @@ let tema_menu_kapat_btn = document.getElementById("tema-menu-kapat");
 let pomodoro_menu_kapat_btn = document.getElementById("pomodoro-menu-kapat");
 let ses_menu = document.getElementById("ses-menu");
 let video_menu = document.getElementById("video-menu");
+let ambiance_menu_btn = document.getElementById("ambiance-btn");
+let ambiance_menu = document.getElementById("ambiance-menu");
+let ambiance_menu_kapat_btn = document.getElementById("ambiance-menu-kapat");
 let tema_menu = document.getElementById("tema-menu");
 let pomodoro_menu = document.getElementById("pomodoro-menu");
 let kronometre_btn = document.getElementById("kronometre-btn");
@@ -33,14 +36,14 @@ let kronometre_dakika = document.getElementById("kronometre-dakika");
 let kronometre_saniye = document.getElementById("kronometre-saniye");
 let videoIframe = document.querySelector("iframe");
 
-let title = document.querySelector("title");       // title DOM elementini seçtik
 
+let title = document.querySelector("title");       // title DOM elementini seçtik
 
 const config = { attributes: true };              // attribute'u ayarlanabilir/değiştirilebilir kıldık 
 
 // observer mutasyon(config nesnesindeki özelliklerde) gözlediğinde çalışan fonksiyon
 function callback() {
-  let dakikaTitle;   
+  let dakikaTitle;
   let saniyeTitle;
   if (kronometre_sayac_id) {
     dakikaTitle = kronometre_dakika.style.getPropertyValue("--value");
@@ -180,9 +183,42 @@ kronometre_btn.addEventListener("click", () => {
   }
 })
 
+kronometre_start_stop_btn.addEventListener("click", () => {   // kronometre başlat-durrdur butonu event listener
+  if (kronometre_sayac_id) {
+    clearInterval(kronometre_sayac_id);
+    kronometre_sayac_id = undefined;
+    kronometre_start_stop_btn.innerText = "Başlat";
+  }
+  else {
+    kronometre_sayac_id = setInterval(() => {
+      kronometre_saniye.style.setProperty("--value", parseInt(kronometre_saniye.style.getPropertyValue("--value")) + 1)
+      if (kronometre_saniye.style.getPropertyValue("--value") == 60) {
+        kronometre_dakika.style.setProperty("--value", parseInt(kronometre_dakika.style.getPropertyValue("--value")) + 1);
+        kronometre_saniye.style.setProperty("--value", 0);
+      }
+    }, 1000);
+
+    kronometre_start_stop_btn.innerText = "Durdur";
+  }
+})
+
+kronometre_reset_btn.addEventListener("click", () => {
+  kronometre_saniye.style.setProperty("--value", 0);
+  kronometre_dakika.style.setProperty("--value", 0);
+  clearInterval(kronometre_sayac_id);
+  kronometre_sayac_id = undefined;
+  kronometre_start_stop_btn.innerText = "Başlat";
+})
+
+
+
+
+// menü buton fonksiyonları:
+
 ses_menu_btn.addEventListener("click", () => {
-  ses_menu.hidden = false;
+  ambiance_menu.hidden = true;
   video_menu.hidden = true;
+  ses_menu.hidden = false;
   tema_menu.hidden = true;
   pomodoro_menu.hidden = true;
 })
@@ -191,6 +227,7 @@ ses_menu_kapat_btn.addEventListener("click", () => {
 })
 
 video_menu_btn.addEventListener("click", () => {
+  ambiance_menu.hidden = true;
   video_menu.hidden = false;
   ses_menu.hidden = true;
   tema_menu.hidden = true;
@@ -200,10 +237,22 @@ video_menu_kapat_btn.addEventListener("click", () => {
   video_menu.hidden = true;
 })
 
-tema_menu_btn.addEventListener("click", () => {
-  tema_menu.hidden = false;
-  ses_menu.hidden = true;
+ambiance_menu_btn.addEventListener("click", () => {
+  ambiance_menu.hidden = false;
   video_menu.hidden = true;
+  ses_menu.hidden = true;
+  tema_menu.hidden = true;
+  pomodoro_menu.hidden = true;
+})
+ambiance_menu_kapat_btn.addEventListener("click", () => {
+  ambiance_menu.hidden = true;
+})
+
+tema_menu_btn.addEventListener("click", () => {
+  ambiance_menu.hidden = true;
+  video_menu.hidden = true;
+  ses_menu.hidden = true;
+  tema_menu.hidden = false;
   pomodoro_menu.hidden = true;
 })
 tema_menu_kapat_btn.addEventListener("click", () => {
@@ -211,57 +260,84 @@ tema_menu_kapat_btn.addEventListener("click", () => {
 })
 
 pomodoro_menu_btn.addEventListener("click", () => {
-  pomodoro_menu.hidden = false;
-  ses_menu.hidden = true;
+  ambiance_menu.hidden = true;
   video_menu.hidden = true;
+  ses_menu.hidden = true;
   tema_menu.hidden = true;
+  pomodoro_menu.hidden = false;
 })
 pomodoro_menu_kapat_btn.addEventListener("click", () => {
   pomodoro_menu.hidden = true;
 })
 
 
-kronometre_start_stop_btn.addEventListener("click", () => {   // kronometre başlat-durrdur butonu event listener
-  if (kronometre_sayac_id) {
-    clearInterval(kronometre_sayac_id);
-    kronometre_sayac_id = undefined;
-    kronometre_start_stop_btn.innerText = "Başlat";
-  }
-  else {
-    kronometre_sayac_id = setInterval(() => {
-      kronometre_saniye.style.setProperty("--value", parseInt( kronometre_saniye.style.getPropertyValue("--value")) + 1)
-      if (kronometre_saniye.style.getPropertyValue("--value") == 60) {
-        kronometre_dakika.style.setProperty("--value", parseInt(kronometre_dakika.style.getPropertyValue("--value")) + 1);
-        kronometre_saniye.style.setProperty("--value", 0);    
-      }
-    }, 1000);
-     
-    kronometre_start_stop_btn.innerText = "Durdur";
-  }  
-})
-
-kronometre_reset_btn.addEventListener("click", () => {
-  kronometre_saniye.style.setProperty("--value", 0);    
-  kronometre_dakika.style.setProperty("--value", 0);
-  clearInterval(kronometre_sayac_id);
-  kronometre_sayac_id = undefined;
-  kronometre_start_stop_btn.innerText = "Başlat";
-})
-
-
 
 // pomodoro video menüsü kodları :
 
-let videolar = ["https://www.youtube.com/embed/4FLK_r3PAh4?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0",
-  "https://www.youtube.com/embed/oN4Rhjcte_U?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0",
-  "https://www.youtube.com/embed/1fueZCTYkpA?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0"];
+let videolar = [
+  "https://www.youtube.com/embed/XlZuouvZAUM?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=63",
+  "https://www.youtube.com/embed/jDIWaGxgF94?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=8",
+  "https://www.youtube.com/embed/TURbeWK2wwg?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+  "https://www.youtube.com/embed/Pn2mzyU52yI?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=8",
+  "https://www.youtube.com/embed/Dke_GEac8e8?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+  "https://www.youtube.com/embed/xP0CY-2wK0k?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+  "https://www.youtube.com/embed/e49o8oQYJtE?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+  "https://www.youtube.com/embed/yq-ajlkczMA?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+  "https://www.youtube.com/embed/j9KbVBWHb6w?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=127",
+  "https://www.youtube.com/embed/9PgO3bDc7R8?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=3679"];
 
 
 let video_buttonlari = document.querySelectorAll(".video-btn");
+let video;
+let donen_video;
+
 video_buttonlari.forEach((video_btn, i) => {
   video_btn.addEventListener("click", () => {
-    videoIframe.hidden = false;
-    videoIframe.src = videolar[i];
+
+    if (donen_video == videoIframe.src) {
+      videoIframe.src = "";
+    }
+    else {
+      videoIframe.src = videolar[i];
+      donen_video = videoIframe.src;
+    }
+
+  })
+});
+
+
+// pomodoro ambiance menüsü kodları :
+
+
+let ambiyanslar =[
+    "https://www.youtube.com/embed/qhPr8XgRnrg?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/W5KJsQMKbwM?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/4FLK_r3PAh4?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/GXZD0uJYr3k?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/YQc4WT0yDH4?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/bpgNEGweWP8?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/tEHPDsIiIjc?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/bn9F19Hi1Lk?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/z8zdPVlkZQw?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1",
+    "https://www.youtube.com/embed/KDJjrRVik5o?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1"
+                 ];
+
+
+let ambiance_buttonlari = document.querySelectorAll(".ambiance-btn");
+let ambiance;
+let donen_ambiance;
+
+ambiance_buttonlari.forEach((ambiance_btn, a) => {
+  ambiance_btn.addEventListener("click", () => {
+
+    if (donen_ambiance == videoIframe.src) {
+      videoIframe.src = "";
+    }
+    else {
+      videoIframe.src = ambiyanslar[a];
+      donen_ambiance = videoIframe.src;
+    }
+
   })
 });
 
@@ -273,6 +349,7 @@ video_buttonlari.forEach((video_btn, i) => {
 let ses_butonlari = document.querySelectorAll(".ses-btn");
 let ses;
 let calisan_ses;
+
 ses_butonlari.forEach((ses_btn) => {
   ses_btn.addEventListener("click", () => {
     if (calisan_ses == ses_btn.innerText) {
@@ -321,8 +398,9 @@ setInterval(() => {
   if (saniye < 10) {
     saniye = "0" + saniye;
   }
-  
-// buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
 
-  tarih.innerText = gun + "/" + ay + "/" + simdi.getFullYear() + "  -  " + saat + ":" + dakika + ":"  + saniye;
+  // buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
+
+  tarih.innerText = `${gun}/${ay}/${simdi.getFullYear()}  -  ${saat}:${dakika}:${saniye}`;
 }, 1000);
+
