@@ -82,12 +82,12 @@
             <li><button id="tema-btn">Temalar</button></li>
             <li><button id="pomodoro-menu-btn">Sure ayari</button></li>
             <li><button id="kronometre-btn">Kronometre</button></li>
-          
+
         </ul>
     </div>
 
 
-    <div id="ses-menu" class="absolute bg-base-100 m-auto top-1/4 w-1/4 border rounded-lg border-black p-2 bg" hidden>
+    <div id="ses-menu" class="absolute bg-base-100 m-auto top-16 sm:w-1/2 w-3/4 border rounded-lg border-black p-2 bg" hidden>
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="ses-menu-kapat">X</button></div>
         <div class="flex flex-col">
@@ -105,7 +105,7 @@
     </div>
 
 
-    <div id="video-menu" class="absolute bg-base-100 m-auto top-1/4 w-1/4 border rounded-lg border-black p-2 bg" hidden>
+    <div id="video-menu" class="absolute bg-base-100 m-auto top-16 sm:w-1/2 w-3/4 border rounded-lg border-black p-2 bg" hidden>
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="video-menu-kapat">X</button></div>
         <div class="flex flex-col">
@@ -125,7 +125,7 @@
     </div>
 
 
-    <div id="ambiance-menu" class="absolute bg-base-100 m-auto top-1/4 w-1/4 border rounded-lg border-black p-2 bg" hidden>
+    <div id="ambiance-menu" class="absolute bg-base-100 m-auto top-16 sm:w-1/2 w-3/4 border rounded-lg border-black p-2 bg" hidden>
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="ambiance-menu-kapat">X</button></div>
         <div class="flex flex-col">
@@ -146,37 +146,27 @@
 
 
 
-    <div id="tema-menu" class="absolute bg-base-100 m-auto top-2 sm:w-1/4 w-1/2 border rounded-lg border-black p-2 bg"
+    <div id="tema-menu" class="absolute bg-base-100 m-auto top-16 sm:w-1/2 w-3/4 border rounded-lg border-black p-2 bg"
         hidden>
         <div class="flex flex-row-reverse"><button class="btn btn-xs btn-circle btn-error"
                 id="tema-menu-kapat">X</button></div>
-        <div class="flex flex-col">
-            <button class="btn rounded-none tema-btn">Pastel</button>
-            <button class="btn rounded-none tema-btn">Light</button>
-            <button class="btn rounded-none tema-btn">Dark</button>
-            <button class="btn rounded-none tema-btn">Cupcake</button>
-            <button class="btn rounded-none tema-btn">Bumblebee</button>
-            <button class="btn rounded-none tema-btn">Emerald</button>
-            <button class="btn rounded-none tema-btn">Corporate</button>
-            <button class="btn rounded-none tema-btn">Synthwave</button>
-            <button class="btn rounded-none tema-btn">Retro</button>
-            <button class="btn rounded-none tema-btn">Cyberpunk</button>
-            <button class="btn rounded-none tema-btn">Valentine</button>
-            <button class="btn rounded-none tema-btn">Halloween</button>
-            <button class="btn rounded-none tema-btn">Garden</button>
-            <button class="btn rounded-none tema-btn">Forest</button>
-            <button class="btn rounded-none tema-btn">Aqua</button>
-            <button class="btn rounded-none tema-btn">Wireframe</button>
-            <button class="btn rounded-none tema-btn">Black</button>
-            <button class="btn rounded-none tema-btn">Luxury</button>
-            <button class="btn rounded-none tema-btn">Dracula</button>
-            <button class="btn rounded-none tema-btn">Cmyk</button>
-            <button class="btn rounded-none tema-btn">Autumn</button>
-            <button class="btn rounded-none tema-btn">Business</button>
-            <button class="btn rounded-none tema-btn">Acid</button>
-            <button class="btn rounded-none tema-btn">Lemonade</button>
-            <button class="btn rounded-none tema-btn">Night</button>
-            <button class="btn rounded-none tema-btn">Coffee</button>
+        <div class=" grid grid-cols-2">
+            <button class="btn rounded-none tema-btn" style="background-color: #b8b8b8; color: #ffffff;">Wireframe</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #e4d8b4; color: #ffffff;">Retro</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #cebdd4; color: #ffffff;">Pastel</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #e4b5d6; color: #ffffff;">Valentine</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #3db868; color: #ffffff;">Emerald</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #4b8e03; color: #ffffff;">Lemonade</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #db924b; color: #ffffff;">Coffee</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #bc8b1c; color: #ffffff;">Bumblebee</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #2f5396; color: #ffffff;">Aqua</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #2d1b69; color: #ffffff;">Synthwave</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #4a6652; color: #ffffff;">Garden</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #363c44; color: #ffffff;">Dracula</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #1d1d1d; color: #ffffff;">Business</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #1e1e1e; color: #ffffff;">Halloween</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #0c1a2b; color: #ffffff;">Night</button>
+            <button class="btn rounded-none tema-btn" style="background-color: #0c0c0c; color: #ffffff;">Black</button>
         </div>
     </div>
 
@@ -197,17 +187,11 @@
 
 
 
-    <div class="overflow-hidden w-[100%]  h-[100%] pointer-events-none absolute -z-10 top-0">
-        <iframe width="560" height="315" class="w-[300%] ml-[-100%] h-[100%] top-0" src="" title="YouTube video player"
+    <div id="video-container" class="overflow-hidden w-[100%]  h-[100%] pointer-events-none absolute -z-10 top-0" hidden>
+        <iframe width="560" height="315" class="w-[300%] ml-[-100%] h-[100%] top-0" src="" 
             frameborder="0" allow="autoplay" allowfullscreen></iframe>
     </div>
 
 
-
-
-
-
-
 </body>
-
 </html>
