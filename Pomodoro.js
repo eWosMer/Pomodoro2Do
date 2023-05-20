@@ -35,6 +35,12 @@ let kronometre_sayac_id;
 let kronometre_dakika = document.getElementById("kronometre-dakika");
 let kronometre_saniye = document.getElementById("kronometre-saniye");
 let videoIframe = document.querySelector("iframe");
+let video_container = document.getElementById("video-container");
+
+
+//yukarıda bu kısımda kullanacağımız değişkenleri tanımladık veya html sayfasındaki karşılığından alarak yeni bir değişkene atadık
+
+
 
 
 let title = document.querySelector("title");       // title DOM elementini seçtik
@@ -71,204 +77,214 @@ observer.observe(saniye, config);
 kronometre_observer.observe(kronometre_saniye, config);
 
 
-pomodoro_input.addEventListener("change", function () {
-  pomodoro_baslangic = pomodoro_input.value;
-  if (calisma_vakti) {
-    dakika.style.setProperty("--value", parseInt(pomodoro_input.value));
-    saniye.style.setProperty("--value", 0);
-
+pomodoro_input.addEventListener("change", function () {                       //menü kısmındaki pomodoro'nun süresi değişince bu fonksiyona giriyor
+  pomodoro_baslangic = pomodoro_input.value;                                  //pomodoro sayacının başlangıç değerini girilen değere eşitliyor
+  if (calisma_vakti) {                                                        //pomodoro sayacı etkinse 
+    dakika.style.setProperty("--value", pomodoro_input.value);      //sayacın dakika değerini girilen değere eşitliyor
+    saniye.style.setProperty("--value", 0);                                   //saniyeyi sıfırlıyor
   }
-})
-
-strt_stp_btn.addEventListener("click", function () {
-  if (sayac_id) {
-    clearInterval(sayac_id);
-    sayac_id = undefined;
-    strt_stp_btn.innerText = "Başlat";
-  }
-  else {
-    sayac_id = setInterval(() => {
-      sayac(sayac_id);
-    }, 1000);
-    strt_stp_btn.innerText = "Durdur";
-  }
-});
+}); // !!! pomodoro süre girdisi kodları burada bitiyor !!!
 
 
-const sayac = function (id) {
-  if (saniye.style.getPropertyValue("--value") > 0) {
-    saniye.style.setProperty("--value", (saniye.style.getPropertyValue("--value") - 1));
+mola_input.addEventListener("change", function () {                           //menü kısmındaki mola'nın süresi değişince bu fonksiyona giriyor
+  mola_baslangic = mola_input.value;                                          //mola sayacının başlangıç değerini girilen değere eşitliyor
+
+  if (!calisma_vakti) {                                                       //eğer pomodoro sayacı etkin değilse yani ekranda mola sayacı görünüyorsa
+    dakika.style.setProperty("--value", mola_input.value);                    //sayacın dakika değerini girilen değere eşitliyor
+    saniye.style.setProperty("--value", 0);                                   //saniyeyi sıfırlıyor
   }
-  if (saniye.style.getPropertyValue("--value") == 0) {
-    if (dakika.style.getPropertyValue("--value") == 0) {
-      clearInterval(id);
+}); // !!! mola süre girdisi koodları burada bitiyor !!!
+
+
+strt_stp_btn.addEventListener("click", function () {                          //başlat-durdur butonu click listener fonksiyonu
+  if (sayac_id) {                                                             //eğer sayaç çalışıyorsa
+    clearInterval(sayac_id);                                                  //sayacı durdur
+    sayac_id = undefined;                                                     //
+    strt_stp_btn.innerText = "Başlat";                                        //butonun yazısını başlat yap
+  }
+  else {                                                                      //eğer sayaç çalışmıyorsa
+    sayac_id = setInterval(() => {                                            //sayacın mesafesini/süre değişimini şuna eşitle:
+      sayac(sayac_id);                                                        //sayacı başlat
+    }, 1000);                                                                 //her 1000 milisaniyede bir değeri değiştir
+    strt_stp_btn.innerText = "Durdur";                                        //butonun yazısını durdur yap
+  }
+}); // !!! başlat-durdur butonu kodları burada bitiyor !!!
+
+
+const sayac = function (id) {                                                                      //sayac fonksiyonu:
+  if (saniye.style.getPropertyValue("--value") > 0) {                                              //--value değişkeninin saiyesini al ve eğer 0'dan büyükse
+    saniye.style.setProperty("--value", (saniye.style.getPropertyValue("--value") - 1));           //saniyenin değerini 1 eksilt ve tekrar --value değişkenine eşitle
+  }
+  if (saniye.style.getPropertyValue("--value") == 0) {                                             //--value değişkeninin saniyesi 0'a eşitse
+    if (dakika.style.getPropertyValue("--value") == 0) {                                           // aynı zamanda dakika değeri 0'a eşitse
+      clearInterval(id);                                                                           //sayacı durdur
     }
-    else {
-      dakika.style.setProperty("--value", (dakika.style.getPropertyValue("--value") - 1));
-      saniye.style.setProperty("--value", 59);
+    else {                                                                                         //saniye 0 ama dakika 0'dan farklıysa
+      dakika.style.setProperty("--value", (dakika.style.getPropertyValue("--value") - 1));         //dakika değerini 1 eksit ve --value değişkenine eşitle
+      saniye.style.setProperty("--value", 59);                                                     //saniye değerini 59'a ayarla ve --value değişkenine eşitle
     }
   }
-}
+} // !!! sayac fonksiyonu kodları burada bitiyor !!!
 
-mola_input.addEventListener("change", function () {
 
-  mola_baslangic = mola_input.value;
+calisma_mola_btn.addEventListener("click", function () {                    //çalışma-mola butonu click listener
 
-  if (!calisma_vakti) {
-    dakika.style.setProperty("--value", mola_input.value);
-    saniye.style.setProperty("--value", 0);
+  clearInterval(sayac_id);                                                  //sayacı durdur
+  sayac_id = undefined;                                                     //
+  strt_stp_btn.innerText = "Başlat";                                        //başlat durdur butonunu başlat olarak ayarla
+
+  if (calisma_vakti) {                                                      //çalışma vakti etkinse yani pomodoro sayacındaysak
+    calisma_vakti = false;                                                  //çalışma vaktini false yap yani artık pomodoro sayacında değiliz
+    dakika.style.setProperty("--value", mola_baslangic);                    //mola sayacının dakika değerini girilen mola inputuna eşitle
+    saniye.style.setProperty("--value", 0);                                 //saniye değerini 0'a eşitle
+    calisma_mola_btn.innerText = "Çalışmaya geç";                           //butonun yazısını çalışmaya geç olarak ayarla
+  }
+
+  else {                                                                    //pomodoro saycı etkin değilse yani moladaysak
+    calisma_vakti = true;                                                   //çalışma vakti etkin yani artık pomodoro sayacındayız
+    dakika.style.setProperty("--value", pomodoro_baslangic);                //sayacın dakika değerini girilen başlangıç inputuna eşitle
+    saniye.style.setProperty("--value", 0);                                 //saniye değerini 0'a eşitle
+    calisma_mola_btn.innerText = "Molaya geç";                              //butonun yazısını molaya geç olarak ayarla
   }
 })
 
-calisma_mola_btn.addEventListener("click", function () {  //çalışma-mola butonu event listener
+sifirla_btn.addEventListener("click", () => {                               //sıfırla butonu click listener
 
-  clearInterval(sayac_id);
-  sayac_id = undefined;
-  strt_stp_btn.innerText = "Başlat";
-
-  if (calisma_vakti) {
-    calisma_vakti = false;
-    dakika.style.setProperty("--value", mola_baslangic);
-    saniye.style.setProperty("--value", 0);
-    calisma_mola_btn.innerText = "Çalışmaya geç";
+  if (calisma_vakti == true) {                                              //eğer çalışma vaktindeysek yani pomodoro sayacı etkinse
+    dakika.style.setProperty("--value", pomodoro_baslangic);                //dakika değerini girilen başlangıç değerine eşitle
   }
 
-  else {
-    calisma_vakti = true;
-    dakika.style.setProperty("--value", pomodoro_baslangic);
-    saniye.style.setProperty("--value", 0);
-    calisma_mola_btn.innerText = "Molaya geç";
-  }
-})
-
-sifirla_btn.addEventListener("click", () => {
-
-  if (calisma_vakti == true) {
-    dakika.style.setProperty("--value", pomodoro_baslangic);
+  else {                                                                    //çalışma vaktinde değilsek yani moladaysak
+    dakika.style.setProperty("--value", mola_baslangic);                    //dakika değerini girilen mola inputuna eşitle
   }
 
-  else {
-    dakika.style.setProperty("--value", mola_baslangic);
+  saniye.style.setProperty("--value", 0);                                   //her iki durum için de saniye değerini 0'a eşitle
+
+  if (sayac_id) {                                                           //eğer pomodoro sayaç çalışıyorsa
+    clearInterval(sayac_id);                                                //sayacı durdur
+    sayac_id = undefined;                                                   //
+    strt_stp_btn.innerText = "Başlat";                                      //başlat-durdur butonunun yazısını başlat olarak ayarla
   }
 
-  saniye.style.setProperty("--value", 0);
+})// !!! çalışma mola butonu kodları burada bitiyor!!!
 
-  if (sayac_id) {
-    clearInterval(sayac_id);
-    sayac_id = undefined;
-    strt_stp_btn.innerText = "Başlat";
-  }
-
-})
 
 // kronometre kodu aşağıdan başlıyor:
 
-kronometre_btn.addEventListener("click", () => {
-  kronometre_butonlar.hidden = !kronometre_butonlar.hidden;
-  kronometre.hidden = !kronometre.hidden;
-  pomodoro_sayac.hidden = !pomodoro_sayac.hidden;
-  pomodoro_sayac_butonlar.hidden = !pomodoro_sayac_butonlar.hidden;
-  clearInterval(kronometre_sayac_id);
-  clearInterval(sayac_id);
-  sayac_id = undefined;
-  kronometre_sayac_id = undefined;
-  kronometre_start_stop_btn.innerText = "Başlat";
-  strt_stp_btn.innerText = "Başlat";
+kronometre_btn.addEventListener("click", () => {                            //menüdeki kronometre butonu click listener
+  kronometre_butonlar.hidden = !kronometre_butonlar.hidden;                 //eğer kronometre butonları gizliyse göster, gösteriliyorsa gizle
+  kronometre.hidden = !kronometre.hidden;                                   //eğer kronometre sayacı gizliyse göster, gösteriliyorsa gizle
+  pomodoro_sayac.hidden = !pomodoro_sayac.hidden;                           //eğer pomodoro sayacı gizliyse göster, gösteriliyorsa gizle
+  pomodoro_sayac_butonlar.hidden = !pomodoro_sayac_butonlar.hidden;         //eğer pomodoro butonları gizliyse göster, gösteriliyorsa gizle
+  clearInterval(kronometre_sayac_id);                                       //kronometre sayacını durdur
+  clearInterval(sayac_id);                                                  //pomodoro sayacını durdur
+  sayac_id = undefined;                                                     //sayac id'yi boşa aldık
+  kronometre_sayac_id = undefined;                                          //kronometre sayac id'yi boşa aldık
+  kronometre_start_stop_btn.innerText = "Başlat";                           //koronometre başlat-durdur butonunun yazısını başlat yap
+  strt_stp_btn.innerText = "Başlat";                                        //pomodoro başlat durdur butonunun yazısını başlat yap
 
-  if (kronometre_btn.innerText == "Kronometre") {
-    kronometre_btn.innerText = "Pomodoro";
+  if (kronometre_btn.innerText == "Kronometre") {                           //eğer menüdeki butonda kronometre yazıyorsa
+    kronometre_btn.innerText = "Pomodoro";                                  //butonun yazısını pomodoro yap
   }
-  else {
-    kronometre_btn.innerText = "Kronometre";
+  else {                                                                    //eğer menüdeki butonda pomodoro yazıyorsa
+    kronometre_btn.innerText = "Kronometre";                                //butonun yazısını kronometre yap
   }
-})
+}); // !!! menü içindeki kronometre-pomodoro geçiş butonu kodları burada bitiyor !!!
 
-kronometre_start_stop_btn.addEventListener("click", () => {   // kronometre başlat-durrdur butonu event listener
-  if (kronometre_sayac_id) {
-    clearInterval(kronometre_sayac_id);
-    kronometre_sayac_id = undefined;
-    kronometre_start_stop_btn.innerText = "Başlat";
+
+kronometre_start_stop_btn.addEventListener("click", () => {                 // kronometre başlat-durdur butonu click listener
+  if (kronometre_sayac_id) {                                                //eğer kronometre sayacı çalışıyorsa
+    clearInterval(kronometre_sayac_id);                                     //kronometre sayacını durdur
+    kronometre_sayac_id = undefined;                                             //kronometre sayac id değişkenini boşa aldık ki sayacın çalışıp çalışmadığını kontrol edebilelim
+    kronometre_start_stop_btn.innerText = "Başlat";                         //butonun yazısını başlat olarak ayarla
   }
-  else {
-    kronometre_sayac_id = setInterval(() => {
-      kronometre_saniye.style.setProperty("--value", parseInt(kronometre_saniye.style.getPropertyValue("--value")) + 1)
-      if (kronometre_saniye.style.getPropertyValue("--value") == 60) {
-        kronometre_dakika.style.setProperty("--value", parseInt(kronometre_dakika.style.getPropertyValue("--value")) + 1);
-        kronometre_saniye.style.setProperty("--value", 0);
+  else {                                                                                                                        //kronometre sayacı çalışmıyorsa
+    kronometre_sayac_id = setInterval(() => {                                                                                   //sayacın mesafe/değişim süresini şöyle ayarla:
+      kronometre_saniye.style.setProperty("--value", parseInt(kronometre_saniye.style.getPropertyValue("--value")) + 1)         //--value değerini al, saniyeyi 1 artır ve tekrar --value değişkenine eşitle
+    
+      if (kronometre_saniye.style.getPropertyValue("--value") == 60) {                                                          //eğer saniye 60 olursa
+        kronometre_dakika.style.setProperty("--value", parseInt(kronometre_dakika.style.getPropertyValue("--value")) + 1);      //--value değerini al, dakikayı 1 artır ve tekrar --value değişkenine eşitle
+        kronometre_saniye.style.setProperty("--value", 0);                                                                      //saniye değerini 0'a eşitle
       }
-    }, 1000);
+    }, 1000);                                                                                                                   //değişim mesafesi/süresini 1000 milisaniye(1saniye) olarak ayarla
 
-    kronometre_start_stop_btn.innerText = "Durdur";
+    kronometre_start_stop_btn.innerText = "Durdur";                                                                             //butonun içini durdur yap
   }
-})
+}); // !!! kronometre başlat-durdur butonu kodları burada bitiyor !!!
 
-kronometre_reset_btn.addEventListener("click", () => {
-  kronometre_saniye.style.setProperty("--value", 0);
-  kronometre_dakika.style.setProperty("--value", 0);
-  clearInterval(kronometre_sayac_id);
-  kronometre_sayac_id = undefined;
-  kronometre_start_stop_btn.innerText = "Başlat";
-})
+
+kronometre_reset_btn.addEventListener("click", () => {                            //koronometre sıfırla butonu click listener
+  kronometre_saniye.style.setProperty("--value", 0);                              //kronometre saniye değerini 0'a eşitle
+  kronometre_dakika.style.setProperty("--value", 0);                              //kronometre dakika değerini 0'a eşitle
+  clearInterval(kronometre_sayac_id);                                             //kronometre sayacını durdur
+  kronometre_sayac_id = undefined;                                                     //
+  kronometre_start_stop_btn.innerText = "Başlat";                                 //kronometre başlat-durdur butonunun yazısını başlat yap
+}); // !!! kronometre reset butonu kodları burada bitiyor !!!
 
 
 
 
 // menü buton fonksiyonları:
 
-ses_menu_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = true;
-  video_menu.hidden = true;
-  ses_menu.hidden = false;
-  tema_menu.hidden = true;
-  pomodoro_menu.hidden = true;
-})
-ses_menu_kapat_btn.addEventListener("click", () => {
-  ses_menu.hidden = true;
-})
+ses_menu_btn.addEventListener("click", () => {                                    //ses menü butonu click listener
+  ambiance_menu.hidden = true;                                                    //ambiyans menüsünü gizle
+  video_menu.hidden = true;                                                       //video menüsünü gizle
+  ses_menu.hidden = false;                                                        //ses menüsünü göster
+  tema_menu.hidden = true;                                                        //tema menüsünü gizle
+  pomodoro_menu.hidden = true;                                                    //pomodoro menüsünü gizle
+});
 
-video_menu_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = true;
-  video_menu.hidden = false;
-  ses_menu.hidden = true;
-  tema_menu.hidden = true;
-  pomodoro_menu.hidden = true;
-})
-video_menu_kapat_btn.addEventListener("click", () => {
-  video_menu.hidden = true;
-})
+ses_menu_kapat_btn.addEventListener("click", () => {                              //ses menüsü kapat butonu click listener
+  ses_menu.hidden = true;                                                         //ses menüsünü gizle
+});
 
-ambiance_menu_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = false;
-  video_menu.hidden = true;
-  ses_menu.hidden = true;
-  tema_menu.hidden = true;
-  pomodoro_menu.hidden = true;
-})
-ambiance_menu_kapat_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = true;
-})
+video_menu_btn.addEventListener("click", () => {                                  //video menüsü click listener
+  ambiance_menu.hidden = true;                                                    //ambiyans menüsünü gizle
+  video_menu.hidden = false;                                                      //video menüsünü göster
+  ses_menu.hidden = true;                                                         //ses menüsünü gizle
+  tema_menu.hidden = true;                                                        //tema menüsünü gizle
+  pomodoro_menu.hidden = true;                                                    //pomodoro menüsünü gizle
+});
 
-tema_menu_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = true;
-  video_menu.hidden = true;
-  ses_menu.hidden = true;
-  tema_menu.hidden = false;
-  pomodoro_menu.hidden = true;
-})
-tema_menu_kapat_btn.addEventListener("click", () => {
-  tema_menu.hidden = true;
-})
+video_menu_kapat_btn.addEventListener("click", () => {                            //video menü kapat butonu click listener
+  video_menu.hidden = true;                                                       //video menüsünü gizle
+});
 
-pomodoro_menu_btn.addEventListener("click", () => {
-  ambiance_menu.hidden = true;
-  video_menu.hidden = true;
-  ses_menu.hidden = true;
-  tema_menu.hidden = true;
-  pomodoro_menu.hidden = false;
-})
-pomodoro_menu_kapat_btn.addEventListener("click", () => {
-  pomodoro_menu.hidden = true;
-})
+ambiance_menu_btn.addEventListener("click", () => {                               //ambiyans menüsüclick listener
+  ambiance_menu.hidden = false;                                                   //ambiyans menüsünü göster
+  video_menu.hidden = true;                                                       //video menüsünü gizle
+  ses_menu.hidden = true;                                                         //ses menüsünü gizle
+  tema_menu.hidden = true;                                                        //tema menüsünü gizle
+  pomodoro_menu.hidden = true;                                                    //pomodoro menüsünü gizle
+});
+
+ambiance_menu_kapat_btn.addEventListener("click", () => {                         //ambiyans menüsü kapat butonu click listener
+    ambiance_menu.hidden = true;                                                  //ambiyans menüsünü gizle
+});
+
+tema_menu_btn.addEventListener("click", () => {                                   //tema menüsü click listener
+  ambiance_menu.hidden = true;                                                    //ambiyans menüsünü gizle
+  video_menu.hidden = true;                                                       //video menüsünü gizle
+  ses_menu.hidden = true;                                                         //ses menüsünü gizle
+  tema_menu.hidden = false;                                                       //tema menüsünü göster
+  pomodoro_menu.hidden = true;                                                    //pomodoro menüsünü gizle
+});
+
+tema_menu_kapat_btn.addEventListener("click", () => {                              //tema menü kapat butonu click listener
+  tema_menu.hidden = true;                                                         //tema menüsünü gizle 
+});
+
+pomodoro_menu_btn.addEventListener("click", () => {                                //pomodoro menüsü click listener
+  ambiance_menu.hidden = true;                                                     //ambiyans menüsünü gizle
+  video_menu.hidden = true;                                                        //video menüsünü gizle
+  ses_menu.hidden = true;                                                          //ses menüsünü gizle
+  tema_menu.hidden = true;                                                         //tema menüsünü gizle 
+  pomodoro_menu.hidden = false;                                                    //pomodoro menüsünü göster 
+});
+
+pomodoro_menu_kapat_btn.addEventListener("click", () => {                          //pomodoro menü kapat butonu click listener
+  pomodoro_menu.hidden = true;                                                     //pomodoro menüsünü gizle
+});
 
 
 
@@ -287,19 +303,21 @@ let videolar = [
   "https://www.youtube.com/embed/9PgO3bDc7R8?autoplay=1&mute=1&modestbranding=1&fs=0&rel=0&controls=0&loop=1&amp;start=3679"];
 
 
-let video_buttonlari = document.querySelectorAll(".video-btn");
+let video_buttonlari = document.querySelectorAll(".video-btn");     //video menüsündeki butonları buradaki değişkene eşitledik
 let video;
-let donen_video;
+let donen_video;                                                    //video ve dönen_video diye iki değişken tanımladık
 
-video_buttonlari.forEach((video_btn, i) => {
-  video_btn.addEventListener("click", () => {
+video_buttonlari.forEach((video_btn, i) => {                        //video menüsündeki her bir buton için
+  video_btn.addEventListener("click", () => {                       //video butonu click listener
 
-    if (donen_video == videoIframe.src) {
-      videoIframe.src = "";
+    if (donen_video == videoIframe.src) {                           //eğer çalışan videoyla tıklanan butonun kaynağı aynıysa yani aynı butona ikinci kez tıklanmışsa
+      videoIframe.src = "";                                         //video çerçevesinin kaynağını boşalttık böylece arkadaki video kayboldu
+      video_container.hidden = true;                                //video çerçevemizi gizledik ki temamıza ve ekranımıza zarar vermesin
     }
-    else {
-      videoIframe.src = videolar[i];
-      donen_video = videoIframe.src;
+    else {                                                          //eğer arka planda dönen video yoksa
+      videoIframe.src = videolar[i];                                //çerçevnin kaynağını tıklanan butonun dizideki denk gelen kaynağına eşitledik
+      donen_video = videoIframe.src;                                //dönen video değişkeniyle çerçevenin kaynağını aynı yaptık ki kontrol edebilelim
+      video_container.hidden = false;                               //video çerçevesini görünür yaptık
     }
 
   })
@@ -323,19 +341,22 @@ let ambiyanslar =[
                  ];
 
 
-let ambiance_buttonlari = document.querySelectorAll(".ambiance-btn");
+let ambiance_buttonlari = document.querySelectorAll(".ambiance-btn");   //ambiyans menü butonlarını bu değişkene eşitledik
 let ambiance;
-let donen_ambiance;
+let donen_ambiance;                                                     //iki yeni değişken oluşturduk
 
-ambiance_buttonlari.forEach((ambiance_btn, a) => {
-  ambiance_btn.addEventListener("click", () => {
+ambiance_buttonlari.forEach((ambiance_btn, a) => {                      //menüdeki her bir ambiyans butonu için
+  ambiance_btn.addEventListener("click", () => {                        //ambiyans buton click listener
 
-    if (donen_ambiance == videoIframe.src) {
-      videoIframe.src = "";
+    if (donen_ambiance == videoIframe.src) {                            //eğer çalışan ambiyansla tıklanan butonun kaynağı aynıysa yani aynı butona ikinci kez tıklanmışsa
+      videoIframe.src = "";                                             //video çerçevesinin kaynağını boşalttık böylece arkadaki ambiyans kayboldu
+      video_container.hidden = true;                                    //video çerçevemizi gizledik ki temamıza ve ekranımıza zarar vermesin
     }
-    else {
-      videoIframe.src = ambiyanslar[a];
-      donen_ambiance = videoIframe.src;
+    else {                                                              //eğer arka planda dönen ambiyans yoksa
+      videoIframe.src = ambiyanslar[a];                                 //çerçevnin kaynağını tıklanan butonun dizideki denk gelen kaynağına eşitledik
+      donen_ambiance = videoIframe.src;                                 //dönen ambiyans değişkeniyle çerçevenin kaynağını aynı yaptık ki kontrol edebilelim
+      video_container.hidden = false;                                   //video çerçevesini görünür yaptık
+
     }
 
   })
@@ -346,24 +367,25 @@ ambiance_buttonlari.forEach((ambiance_btn, a) => {
 
 // pomodoro ses menüsü kodları :
 
-let ses_butonlari = document.querySelectorAll(".ses-btn");
+let ses_butonlari = document.querySelectorAll(".ses-btn");                        //ses menü butonlarını bu değişkene eşitledik
 let ses;
-let calisan_ses;
+let calisan_ses;                                                                  //iki yeni değişken oluşturduk
 
-ses_butonlari.forEach((ses_btn) => {
-  ses_btn.addEventListener("click", () => {
-    if (calisan_ses == ses_btn.innerText) {
-      ses.pause();
-      ses = null;
-      calisan_ses = null;
+ses_butonlari.forEach((ses_btn) => {                                              //her bir ses butonu için
+  ses_btn.addEventListener("click", () => {                                       //ses butonu click listener 
+    if (calisan_ses == ses_btn.innerText) {                                       //eğer çalışan sesle tıklanan butonun yazısı aynıysa yani butona ikince kez tıklanmışsa 
+      ses.pause();                                                                //sesi durdur
+      ses = null;                                                                 //ses değişkenini boş yap
+      calisan_ses = null;                                                         //çalışan ses değişkenini boş yap
     }
-    else {
-      if (calisan_ses) {
-        ses.pause();
+    else {                                                                        //eğer çalışan ses yoksa veya farklıysa
+      if (calisan_ses) {                                                          //şu an çalışsan ses varsa
+        ses.pause();                                                              //sesi durdur ki sesler birbirine karışmasın
       }
-      calisan_ses = ses_btn.innerText;
-      ses = new Audio("./sesler/" + ses_btn.innerText.toLowerCase() + ".mp3");
-      ses.play();
+
+      calisan_ses = ses_btn.innerText;                                            //çalışan sesi tıklanan butonun yazısına eşitle
+      ses = new Audio("./sesler/" + ses_btn.innerText.toLowerCase() + ".mp3");    //ses değişkenini tıklanan butonun yazısına sonuna ".mp3" koyarak sesler dosyasındaki karşılığına eşitle ve yeni ses objesi oluştur
+      ses.play();                                                                 //sesi oynat
     }
   })
 })
@@ -375,7 +397,7 @@ ses_butonlari.forEach((ses_btn) => {
 // tarih ve saat kodları :
 
 
-let tarih = document.getElementById("tarih");
+let tarih = document.getElementById("tarih");         //html'den tarih id'li elementi al ve bu değişkene eşitle
 setInterval(() => {
   let simdi = new Date();
   let saat = simdi.getHours();
@@ -386,7 +408,7 @@ setInterval(() => {
   if (dakika < 10) {
     dakika = "0" + dakika;
   }
-  let ay = simdi.getMonth() + 1;  // js'de aylar sıfırdan(0) başladığından değişkene bir(1) ekledik.
+  let ay = simdi.getMonth() + 1;                      // js'de aylar sıfırdan(0) başladığından değişkene bir(1) ekledik.
   if (ay < 10) {
     ay = "0" + ay;
   }
@@ -399,7 +421,7 @@ setInterval(() => {
     saniye = "0" + saniye;
   }
 
-  // buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik.
+  // buraya kadar olan kodlarda sayı tek haneliyse başına sıfır(0) ekledik ve bize gereken sistem verilerini aldık.
 
   tarih.innerText = `${gun}/${ay}/${simdi.getFullYear()}  -  ${saat}:${dakika}:${saniye}`;
 }, 1000);
